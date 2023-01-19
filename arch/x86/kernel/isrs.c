@@ -849,6 +849,7 @@ void syscall_handler(struct state *s)
 			break;
 #endif
 
+
 #ifndef DISABLE_SYS_TGKILL
 		case 234:
 			/* tgkill */
@@ -911,6 +912,20 @@ void syscall_handler(struct state *s)
 		case 318:
 			/* getrandom */
 			s->rax = sys_getrandom((void *)s->rdi, s->rsi, s->rdx);
+			break;
+#endif
+
+#ifndef DISABLE_SYS_TRUNCATE
+		case 319:
+			/* truncate */
+			s->rax = sys_truncate((const char*)s->rdi, s->rsi);
+			break;
+#endif
+//
+#ifndef DISABLE_SYS_FTRUNCATE
+		case 335:
+			/* ftruncate */
+			s->rax = sys_truncate(s->rdi, s->rsi);
 			break;
 #endif
 
